@@ -39,7 +39,11 @@ export default function FeatureImportanceChart() {
         />
         <Tooltip
           cursor={{ fill: "rgba(45,212,191,0.06)" }}
-          content={<ChartTooltip formatter={(v) => `${v.toFixed(2)}%`} />}
+          content={
+            <ChartTooltip
+              formatter={(v) => `${(v ?? 0).toFixed(2)}%`}
+            />
+          }
         />
         <Bar dataKey="value" radius={[0, 6, 6, 0]} maxBarSize={22}>
           {featureImportance.map((entry, i) => (
@@ -48,7 +52,16 @@ export default function FeatureImportanceChart() {
           <LabelList
             dataKey="value"
             position="right"
-            formatter={(v: number) => `${v.toFixed(1)}%`}
+            formatter={(value) => {
+              if (value == null) return "";
+
+              const num =
+                typeof value === "number"
+                  ? value
+                  : Number(value);
+
+              return Number.isFinite(num) ? `${num.toFixed(1)}%` : "";
+            }}
             fill="#e9f1ee"
             fontSize={11.5}
             fontWeight={600}
