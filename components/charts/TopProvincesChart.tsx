@@ -50,18 +50,35 @@ export default function TopProvincesChart() {
         />
         <Tooltip
           cursor={{ fill: "rgba(45,212,191,0.06)" }}
-          content={<ChartTooltip formatter={(v) => `Burden index: ${v.toFixed(4)}`} />}
+          content={
+            <ChartTooltip
+              formatter={(v) =>
+                v == null
+                ? "Burden index: -"
+                : `Burden index: ${v.toFixed(4)}`
+              }
+            />
+          }
         />
         <Bar dataKey="burden" radius={[0, 6, 6, 0]} maxBarSize={16}>
           {topProvinces.map((entry, i) => (
             <Cell key={entry.province} fill={severityColors[i % severityColors.length]} />
           ))}
           <LabelList
-            dataKey="burden"
+            dataKey="value"
             position="right"
-            formatter={(v: number) => v.toFixed(4)}
+            formatter={(value) => {
+              if (value == null) return "";
+
+              const num =
+                typeof value === "number"
+                  ? value
+                  : Number(value);
+
+              return Number.isFinite(num) ? `${num.toFixed(1)}%` : "";
+            }}
             fill="#e9f1ee"
-            fontSize={11}
+            fontSize={11.5}
             fontWeight={600}
           />
         </Bar>
