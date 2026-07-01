@@ -2,7 +2,7 @@
 
 import type { TooltipContentProps } from "recharts";
 
-type Props = TooltipContentProps<number, string> & {
+type Props = Partial<TooltipContentProps<number, string>> & {
   suffix?: string;
   formatter?: (v: number) => string;
 };
