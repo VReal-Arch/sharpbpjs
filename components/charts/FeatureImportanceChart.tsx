@@ -41,7 +41,11 @@ export default function FeatureImportanceChart() {
           cursor={{ fill: "rgba(45,212,191,0.06)" }}
           content={
             <ChartTooltip
-              formatter={(v) => `${(v ?? 0).toFixed(2)}%`}
+              formatter={(v) =>
+                v == null
+                  ? "Burden index: -"
+                  : `Burden index: ${v.toFixed(4)}`
+              }
             />
           }
         />
